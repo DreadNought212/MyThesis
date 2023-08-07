@@ -1,0 +1,115 @@
+﻿.content {
+    background-color: black;
+    color: white;
+}
+
+.userpic {
+    border: 3px solid black;
+}
+
+.botnav {
+    color: white;
+    border-bottom: 1px solid gray;
+    border-top: 1px solid gray;
+    background-color: black;
+}
+
+.profileEditWin {
+    background-color: black;
+}
+
+.newPostWin, .newPostReportWin {
+    background-color: black;
+}
+
+.edit_userpic {
+    border: 3px solid black;
+}
+
+.wall {
+    background-color: black;
+}
+
+.wall_nav {
+    border-bottom: 1px solid gray;
+    padding: 25px;
+    background-color: black;
+}
+.userpic_mini {
+    border: 3px solid black;
+}
+
+.post {
+    border: 1px solid #ccc;
+    background-color: black;
+}
+.comment {
+    border: 1px solid #ccc;
+    background-color: black;
+}
+.userpic {
+    border: 3px solid black;
+}
+
+.post a, .comment a {
+    color: white;
+}
+
+.userpic_mini {
+    border: 3px solid black;
+}
+
+.post-name a:hover {
+    text-decoration: underline;
+}
+.post-login a {
+    color: #808080;
+}
+    .post-login a:hover {
+        text-decoration: underline;
+    }
+.post-date {
+    color: #808080;
+}
+#commented-date {
+    color: white;
+}
+
+.author_login a{
+    color: white;
+}
+
+.post {
+    border: 1px solid gray;
+    background-color: black;
+}
+    .post:hover {
+        background-color: #141414;
+        cursor: pointer;
+    }
+
+.author_name a {
+    color: white;
+}
+
+.author_login a {
+    color: #808080;
+}
+
+.date {
+    color: #808080;
+}
+
+.topnav {
+    background-color: black;
+    border-bottom: 1px solid gray;
+}
+
+    .topnav a {
+        color: white;
+    }
+
+
+        .topnav a:hover {
+            color: palevioletred;
+        }

@@ -1,0 +1,205 @@
+﻿@model List<Artium.Models.Objects.WallPost>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reports | Metem</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
+          crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+            crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/98abbd269d.js" crossorigin="anonymous"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="~/js/date_format.js"></script>
+    <link href="~/css/navbar.css" rel="stylesheet" />
+    <link href="~/css/WallPost/style.css" rel="stylesheet" />
+    <link href="~/css/Report/style.css" rel="stylesheet" />
+
+    <link href="~/css/Feed/style.css" rel="stylesheet" />
+
+    @if (ViewBag.theme == "dark")
+    {
+        <link href="~/css/dark_theme.css" rel="stylesheet" />
+    }
+
+    <script src="~/js/user_page.js"></script>
+
+</head>
+<body>
+    <input type="hidden" name="lang_page" id="lang_page" value="@ViewBag.Lang" />
+    @if (ViewBag.Lang == "eng")
+    {
+        <div class="topnav">
+            <a asp-controller="Feed" asp-action="Index"><img src="~/img/logo.png" class="nav_logo" alt="Alternate Text" /></a>
+            <a asp-controller="Feed" asp-action="Index">Feed</a>
+            <a asp-controller="SubFeed" asp-action="Index">Subscriptions</a>
+            <a href="/@ViewBag.user.Login">Profile</a>
+            @if (ViewBag.isAdmin)
+            {
+                <a asp-action="Index" asp-controller="Report">Reports</a>
+            }
+            <form method="post" asp-controller="User" asp-action="ChangeTheme" id="change_theme">
+                <input type="hidden" name="url" id="location" value="" />
+                <a href="javascript:{}" onclick="document.getElementById('change_theme').submit();
+                                    return false;" style="float: right; padding: 14px 16px;">
+                    @if (ViewBag.theme == "light")
+                    {
+                        <i class="fas fa-sun"></i>
+                    }
+                    else
+                    {
+                        <i class="far fa-moon"></i>
+                    }
+                </a>
+            </form>
+            <form method="post" asp-controller="User" asp-action="ChangeLang" id="change_lang">
+                <input type="hidden" name="url" id="url" value="" />
+                <a href="javascript:{}" onclick="document.getElementById('change_lang').submit();
+                                            return false;" style="float: right; padding: 14px 16px;">
+                    Eng
+                </a>
+            </form>
+            @if (!ViewBag.isAuth)
+            {
+                <a asp-action="Login" asp-controller="Account" style="float: right;">Sign In</a>
+                <a asp-action="Register" asp-controller="Account" style="float: right;">Sign Up</a>
+            }
+            else
+            {
+                <form method="post" asp-controller="Account" asp-action="Logout" id="logout_form">
+                    <a href="javascript:{}" onclick="document.getElementById('logout_form').submit();
+                                    return false;" style="float: right; padding: 14px 16px;">
+                        Log out
+                    </a>
+                </form>
+            }
+        </div>
+    }
+    @if (ViewBag.Lang == "rus")
+    {
+        <div class="topnav">
+            <a asp-controller="Feed" asp-action="Index"><img src="~/img/logo.png" class="nav_logo" alt="Alternate Text" /></a>
+            <a asp-controller="Feed" asp-action="Index">Новости</a>
+            <a asp-controller="SubFeed" asp-action="Index">Подписки</a>
+            <a href="/@ViewBag.user.Login">Профиль</a>
+            @if (ViewBag.isAdmin)
+            {
+                <a asp-action="Index" asp-controller="Report">Жалобы</a>
+            }
+            <form method="post" asp-controller="User" asp-action="ChangeTheme" id="change_theme">
+                <input type="hidden" name="url" id="location" value="" />
+                <a href="javascript:{}" onclick="document.getElementById('change_theme').submit();
+                                    return false;" style="float: right; padding: 14px 16px;">
+                    @if (ViewBag.theme == "light")
+                    {
+                        <i class="fas fa-sun"></i>
+                    }
+                    else
+                    {
+                        <i class="far fa-moon"></i>
+                    }
+                </a>
+            </form>
+            <form method="post" asp-controller="User" asp-action="ChangeLang" id="change_lang">
+                <input type="hidden" name="url" id="url" value="" />
+                <a href="javascript:{}" onclick="document.getElementById('change_lang').submit();
+                                    return false;" style="float: right; padding: 14px 16px;">
+                    Рус
+                </a>
+            </form>
+            @if (!ViewBag.isAuth)
+            {
+                <a asp-action="Login" asp-controller="Account" style="float: right;">Войти</a>
+                <a asp-action="Register" asp-controller="Account" style="float: right;">Зарегистрироваться</a>
+            }
+            else
+            {
+                <form method="post" asp-controller="Account" asp-action="Logout" id="logout_form">
+                    <a href="javascript:{}" onclick="document.getElementById('logout_form').submit();
+                                    return false;" style="float: right; padding: 14px 16px;">
+                        Выйти
+                    </a>
+                </form>
+            }
+        </div>
+    }
+    <div style="height: 50px; width: 100%;"></div>
+    <!-- feed -->
+    <div class="content">
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col">
+                @foreach (var report in @ViewBag.Reports)
+                {
+                    <div class="report" onclick="goToReport(@report.Id)">
+                        <div class="row">
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col-auto report-reason">
+                                        <p>@report.Reason</p>
+                                    </div>
+                                    <div class="col-auto report-date">
+                                        <p class="date">@report.Date</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col report-text">
+                                        <p>@report.Text</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-auto post-id">
+                                        @if (ViewBag.Lang == "eng")
+                                        {
+                                            <p>
+                                                Post: <a href="/Post/@report.WallPost.Id">@report.WallPost.Id</a>
+                                            </p>
+                                        }
+                                        else
+                                        {
+                                            <p>
+                                                Запись: <a href="/Post/@report.WallPost.Id">@report.WallPost.Id</a>
+                                            </p>
+                                        }
+                                    </div>
+                                    <div class="col post-author">
+                                        @if (ViewBag.Lang == "eng")
+                                        {
+                                            <p>
+                                                Author: <a href="/@report.WallPost.User.Login">@report.WallPost.User.Login</a>
+                                            </p>
+                                        }
+                                        else
+                                        {
+                                            <p>
+                                                Автор: <a href="/@report.WallPost.User.Login">@report.WallPost.User.Login</a>
+                                            </p>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <form asp-action="ResolveReport" asp-controller="Report" method="post">
+                                            <input type="number" name="id" value="@report.Id" hidden />
+                                            <button class="btn btn-outline-success btn-sm" onclick="resolve(@report.Id)"><i class="fas fa-check"></i></button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="col-2"></div>
+        </div>
+    </div>
+    <script type="text/javascript">$('#location').val(location.href);</script>
+    <script type="text/javascript">$('#url').val(location.href);</script>
+</body>
+</html>

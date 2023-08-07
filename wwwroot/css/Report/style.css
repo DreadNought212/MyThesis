@@ -1,0 +1,50 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;800&display=swap');
+.report {
+    border: 1px solid #ccc;
+    padding: 50px;
+    background-color: white;
+}
+.report p {
+    font-size: 14px;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    margin: 0;
+}
+button {
+    font-family: 'Open Sans', sans-serif;
+}
+a {
+    text-decoration: none;
+    color: black;
+}
+.report-reason p {
+    font-weight: bold;
+}
+.report-name a:hover {
+    text-decoration: underline;
+}
+.report-login p {
+    color: #808080;
+}
+.report-login a:hover {
+    text-decoration: underline;
+}
+.post-author p a:hover {
+    text-decoration: underline;
+    color: black;
+}
+.post-author p a {
+    font-weight: bold;
+}
+    .post-id p a:hover {
+        text-decoration: underline;
+        color: black;
+    }
+
+.post-id p a {
+    font-weight: bold;
+}

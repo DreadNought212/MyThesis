@@ -1,0 +1,372 @@
+﻿@model List<Artium.Models.Objects.WallPost>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.WallPost.User.Login post | Metem</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
+          crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+            crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/98abbd269d.js" crossorigin="anonymous"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="~/js/date_format.js"></script>
+    <link href="~/css/navbar.css" rel="stylesheet" />
+    <link href="~/css/WallPost/style.css" rel="stylesheet" />
+
+    @if (ViewBag.theme == "dark")
+    {
+        <link href="~/css/dark_theme.css" rel="stylesheet" />
+    }
+
+    <script src="~/js/user_page.js"></script>
+
+</head>
+<body>
+    <input type="hidden" name="lang_page" id="lang_page" value="@ViewBag.Lang" />
+    @if (ViewBag.Lang == "eng")
+    {
+        <div class="topnav">
+            <a asp-controller="Feed" asp-action="Index"><img src="~/img/logo.png" class="nav_logo" alt="Alternate Text" /></a>
+            <a asp-controller="Feed" asp-action="Index">Feed</a>
+            <a asp-controller="SubFeed" asp-action="Index">Subscriptions</a>
+            <a href="/@ViewBag.user.Login">Profile</a>
+            @if (ViewBag.isAdmin)
+            {
+                <a asp-action="Index" asp-controller="Report">Reports</a>
+            }
+            <form method="post" asp-controller="User" asp-action="ChangeTheme" id="change_theme">
+                <input type="hidden" name="url" id="location" value="" />
+                <a href="javascript:{}" onclick="document.getElementById('change_theme').submit();
+                                    return false;" style="float: right; padding: 14px 16px;">
+                    @if (ViewBag.theme == "light")
+                    {
+                        <i class="fas fa-sun"></i>
+                    }
+                    else
+                    {
+                        <i class="far fa-moon"></i>
+                    }
+                </a>
+            </form>
+            <form method="post" asp-controller="User" asp-action="ChangeLang" id="change_lang">
+                <input type="hidden" name="url" id="url" value="" />
+                <a href="javascript:{}" onclick="document.getElementById('change_lang').submit();
+                                            return false;" style="float: right; padding: 14px 16px;">
+                    Eng
+                </a>
+            </form>
+            @if (!ViewBag.isAuth)
+            {
+                <a asp-action="Login" asp-controller="Account" style="float: right;">Sign In</a>
+                <a asp-action="Register" asp-controller="Account" style="float: right;">Sign Up</a>
+            }
+            else
+            {
+                <form method="post" asp-controller="Account" asp-action="Logout" id="logout_form">
+                    <a href="javascript:{}" onclick="document.getElementById('logout_form').submit();
+                                    return false;" style="float: right; padding: 14px 16px;">
+                        Log out
+                    </a>
+                </form>
+            }
+        </div>
+    }
+    @if (ViewBag.Lang == "rus")
+    {
+        <div class="topnav">
+            <a asp-controller="Feed" asp-action="Index"><img src="~/img/logo.png" class="nav_logo" alt="Alternate Text" /></a>
+            <a asp-controller="Feed" asp-action="Index">Новости</a>
+            <a asp-controller="SubFeed" asp-action="Index">Подписки</a>
+            <a href="/@ViewBag.user.Login">Профиль</a>
+            @if (ViewBag.isAdmin)
+            {
+                <a asp-action="Index" asp-controller="Report">Жалобы</a>
+            }
+            <form method="post" asp-controller="User" asp-action="ChangeTheme" id="change_theme">
+                <input type="hidden" name="url" id="location" value="" />
+                <a href="javascript:{}" onclick="document.getElementById('change_theme').submit();
+                                    return false;" style="float: right; padding: 14px 16px;">
+                    @if (ViewBag.theme == "light")
+                    {
+                        <i class="fas fa-sun"></i>
+                    }
+                    else
+                    {
+                        <i class="far fa-moon"></i>
+                    }
+                </a>
+            </form>
+            <form method="post" asp-controller="User" asp-action="ChangeLang" id="change_lang">
+                <input type="hidden" name="url" id="url" value="" />
+                <a href="javascript:{}" onclick="document.getElementById('change_lang').submit();
+                                    return false;" style="float: right; padding: 14px 16px;">
+                    Рус
+                </a>
+            </form>
+            @if (!ViewBag.isAuth)
+            {
+                <a asp-action="Login" asp-controller="Account" style="float: right;">Войти</a>
+                <a asp-action="Register" asp-controller="Account" style="float: right;">Зарегистрироваться</a>
+            }
+            else
+            {
+                <form method="post" asp-controller="Account" asp-action="Logout" id="logout_form">
+                    <a href="javascript:{}" onclick="document.getElementById('logout_form').submit();
+                                    return false;" style="float: right; padding: 14px 16px;">
+                        Выйти
+                    </a>
+                </form>
+            }
+        </div>
+    }
+    <div style="height: 50px; width: 100%;"></div>
+    <!-- New comment modal window -->
+    <div id="newCommentWin" class="newPostWin">
+        <form asp-action="NewComment" asp-controller="Post" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="WallPostId" id="commented-wallpostid" />
+            <div class="row">
+                @if (ViewBag.Lang == "eng")
+                {
+                    <button class="btn btn-outline-dark" onclick="closeNewCommentWin()" type="button">Close</button>
+                }
+                else
+                {
+                    <button class="btn btn-outline-dark" onclick="closeNewCommentWin()" type="button">Закрыть</button>
+                }
+                <div class="col"></div>
+                <div class="col-auto">
+                </div>
+                <div class="col-1"></div>
+            </div>
+            <div class="main">
+                <div class="row">
+                    <div class="col-auto">
+                        <div class="userpic" id="commented-userpic" style="height: 50px; width: 50px; border: 2px solid black"></div>
+                    </div>
+                    <div class="col">
+                        <div class="row">
+                            <div class="col">
+                                <h1 id="commented-login"></h1>
+                            </div>
+                            <div class="col">
+                                <h1 id="commented-date" class="date"></h1>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <p id="commented-text"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-1"></div>
+                </div>
+                <div class="row">
+                    <div class="col-auto">
+                        <div class="userpic" style="background-image: url(@ViewBag.User.UserInfo.Userpic.Path); height: 50px; width: 50px; border: 2px solid black"></div>
+                    </div>
+                    <div class="col">
+                        <textarea class="form-control" type="text" name="text"></textarea>
+                    </div>
+                    <div class="col-1"></div>
+                </div>
+                <div class="row">
+                    <div class="col-1"></div>
+                    <div class="col"></div>
+                    <div class="col-auto">
+                        @if (ViewBag.Lang == "eng")
+                        {
+                            <button class="btn btn-outline-dark" type="submit">Save</button>
+                        }
+                        else
+                        {
+                            <button class="btn btn-outline-dark" type="submit">Сохранить</button>
+                        }
+                    </div>
+                    <div class="col-1"></div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- New Post Report modal window-->
+    <div id="newPostReportWin" class="newPostReportWin">
+        <form asp-action="NewPostReport" asp-controller="Report" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="WallPostId" id="reported-wallpostid" />
+            <div class="row">
+                <div class="col-auto">
+                    @if (ViewBag.Lang == "eng")
+                    {
+                        <button class="btn btn-outline-dark" onclick="closePostReportWin()" type="button">Close</button>
+                    }
+                    else
+                    {
+                        <button class="btn btn-outline-dark" onclick="closePostReportWin()" type="button">Закрыть</button>
+                    }
+                </div>
+                <div class="col"></div>
+                <div class="col-auto">
+                </div>
+                <div class="col-1"></div>
+            </div>
+            <div class="main">
+                <div class="row">
+                    <div class="col label">
+                        <p>Reason for complaint: </p>
+                    </div>
+                    <div class="col-1"></div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        @if (ViewBag.Lang == "eng")
+                        {
+                            <select class="form-select form-select-lg mb-3" name="reason" aria-label=".form-select-lg example">
+                                <option selected value="Other">Other</option>
+                                <option value="Spam">Spam</option>
+                                <option value="Insult">Insult</option>
+                                <option value="Adult material">Adult material</option>
+                                <option value="Fraud">Fraud</option>
+                                <option value="Extremism">Extremism</option>
+                                <option value="Animal abuse">Animal abuse</option>
+                                <option value="Call for suicide">Call for suicide</option>
+                                <option value="Call for bullying">Call for bullying</option>
+                                <option value="Violence">Violence</option>
+                                <option value="Drug propaganda">Drug propaganda</option>
+                            </select>
+                        }
+                        else
+                        {
+                            <select class="form-select form-select-lg mb-3" name="reason" aria-label=".form-select-lg example">
+                                <option selected value="Other">Другое</option>
+                                <option value="Spam">Спам</option>
+                                <option value="Insult">Оскорбление</option>
+                                <option value="Adult material">Материалы для взрослых</option>
+                                <option value="Fraud">Мошенничество</option>
+                                <option value="Extremism">Экстримизм</option>
+                                <option value="Animal abuse">Жестокое обращение с животными</option>
+                                <option value="Call for suicide">Призыв к суициду</option>
+                                <option value="Call for bullying">Призыв к травле</option>
+                                <option value="Violence">Насилие</option>
+                                <option value="Drug propaganda">Пропаганда наркотиков</option>
+                            </select>
+                        }
+                    </div>
+                    <div class="col-1"></div>
+                </div>
+                <div class="row label">
+                    <div class="col">
+                        <p>Help us understand the problem. What is going on with this post?</p>
+                    </div>
+                    <div class="col-1"></div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <textarea class="form-control" type="text" name="text"></textarea>
+                    </div>
+                    <div class="col-1"></div>
+                </div>
+                <div class="row">
+                    <div class="col-1"></div>
+                    <div class="col"></div>
+                    <div class="col-auto">
+                        @if (ViewBag.Lang == "eng")
+                        {
+                            <button class="btn btn-outline-dark" type="submit">Save</button>
+                        }
+                        else
+                        {
+                            <button class="btn btn-outline-dark" type="submit">Сохранить</button>
+                        }
+                    </div>
+                    <div class="col-1"></div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="content">
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col">
+                <div class="post">
+                    <div class="row">
+                        <div class="col-auto">
+                            <div class="userpic" style="background-image: url(@ViewBag.WallPost.User.UserInfo.Userpic.Path)"></div>
+                            <a href="#" hidden id="post-userpic-@ViewBag.WallPost.Id">@ViewBag.WallPost.User.UserInfo.Userpic.Path</a>
+                        </div>
+                        <div class="col">
+                            <div class="row">
+                                <div class="col-auto post-name">
+                                    <a href="/@ViewBag.WallPost.User.Login">@ViewBag.WallPost.User.UserInfo.Name</a>
+                                </div>
+                                <div class="col-auto post-login">
+                                    <a href="/@ViewBag.WallPost.User.Login" id="post-login-@ViewBag.WallPost.Id">&#64;@ViewBag.WallPost.User.Login</a>
+                                </div>
+                                <div class="col-auto post-date">
+                                    <a class="date" id="post-date-@ViewBag.WallPost.Id">@ViewBag.WallPost.Date</a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col post-text">
+                                    <p id="post-text-@ViewBag.WallPost.Id">@ViewBag.WallPost.Text</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-auto">
+                                    <button class="btn btn-outline-primary btn-sm" onclick="newCommentWindow(@ViewBag.WallPost.Id)"><i class="fas fa-comment"></i></button> @ViewBag.WallPost.Comments
+                                </div>
+                                @if (ViewBag.User.Id != @ViewBag.WallPost.UserId)
+                                {
+                                    <div class="col-auto">
+                                        <button class="btn btn-outline-danger btn-sm" onclick="newPostReportWindow(@ViewBag.WallPost.Id)"><i class="fas fa-flag"></i></button>
+                                    </div>
+                                }
+
+                                <div class="col"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="comments">
+                    @foreach (var comment in @ViewBag.Comments)
+                    {
+                        <div class="comment">
+                            <div class="row">
+                                <div class="col-auto">
+                                    <div class="userpic" style="background-image: url(@comment.User.UserInfo.Userpic.Path)"></div>
+                                </div>
+                                <div class="col">
+                                    <div class="row">
+                                        <div class="col-auto post-name">
+                                            <a href="/@comment.User.Login">@comment.User.UserInfo.Name</a>
+                                        </div>
+                                        <div class="col-auto post-login">
+                                            <a href="/@comment.User.Login">&#64;@comment.User.Login</a>
+                                        </div>
+                                        <div class="col-auto post-date">
+                                            <a class="date">@comment.Date</a>
+                                        </div>
+                                        <div class="col"></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <p>@comment.Text</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="col-2"></div>
+        </div>
+    </div>
+    <script type="text/javascript">$('#location').val(location.href);</script>
+    <script type="text/javascript">$('#url').val(location.href);</script>
+</body>
+</html>

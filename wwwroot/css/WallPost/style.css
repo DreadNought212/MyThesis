@@ -1,0 +1,122 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;800&display=swap');
+.post {
+    border: 1px solid #ccc;
+    padding: 50px;
+    background-color: white;
+}
+.comment {
+    border: 1px solid #ccc;
+    border-top: none;
+    padding: 50px;
+    background-color: white;
+}
+.comment a, .post a {
+    font-size: 16px;
+}
+.comment p {
+    font-size: 14px;
+}
+.post p {
+    font-size: 16px;
+}
+.userpic {
+    height: 50px;
+    width: 50px;
+    background-size: cover;
+    border-radius: 100px;
+    background-position: center;
+    border: 3px solid black;
+}
+.newPostReportWin button {
+    margin: 20px 0 20px 0;
+}
+
+.newPostWin, .newPostReportWin {
+    padding-left: 40px;
+    max-width: 800px;
+    background-color: #fafafa;
+    top: 10%; /* отступ сверху */
+    right: 0;
+    left: 0;
+    font-size: 14px;
+    margin: 0 auto;
+    z-index: 2; /* поверх всех */
+    display: none; /* сначала невидим */
+    position: fixed; /* фиксированное позиционирование, окно стабильно при прокрутке */
+    border-radius: 15px;
+}
+
+#shadow {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 1; /* поверх всех  кроме окна*/
+    background: #000;
+    opacity: 0.5; /*прозрачность*/
+    left: 0;
+    top: 0;
+}
+
+
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    margin: 0;
+}
+
+.post a, .comment a {
+    text-decoration: none;
+    color: black;
+}
+
+.newPostWin form .row {
+    padding-top: 20px;
+}
+
+.newPostWin textarea {
+    height: 200px;
+}
+
+.newPostWin .main button {
+    margin-bottom: 20px;
+}
+
+.userpic_mini {
+    height: 50px;
+    width: 50px;
+    background-size: cover;
+    border-radius: 100px;
+    background-position: center;
+    border: 3px solid black;
+}
+
+.post-name a {
+    font-weight: bold;
+}
+.post-name a:hover {
+    text-decoration: underline;
+}
+.post-login a {
+    color: #808080;
+}
+    .post-login a:hover {
+        text-decoration: underline;
+    }
+.post-date {
+    color: #808080;
+}
+#commented-date {
+    font-size: 24px;
+    color: black;
+}
+
+#commented-text {
+    font-size: 14px;
+}
+
+#commented-login {
+    font-size: 24px;
+    font-weight: bold;
+}

@@ -1,0 +1,41 @@
+﻿.author_login a{
+    color: black;
+    text-decoration: none;
+}
+.author_login a:hover {
+    text-decoration: underline;
+}
+
+.post {
+    border: 1px solid gray;
+    padding: 50px;
+    background-color: white;
+}
+.post {
+    border-top: none;
+}
+    .post:hover {
+        background-color: #fafafa;
+        cursor: pointer;
+    }
+
+    .post:hover {
+        background-color: #fafafa;
+        cursor: pointer;
+    }
+
+.author_name a {
+    font-weight: bold;
+    color: black;
+    text-decoration: none;
+}
+.author_name a:hover {
+    text-decoration: underline;
+}
+.author_login a {
+    color: #808080;
+}
+
+.date {
+    color: #808080;
+}
